@@ -1,0 +1,209 @@
+use std::borrow::{Borrow, BorrowMut};
+use std::collections::VecDeque;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+use crate::ExplodeState::{AddValues, Completed};
+
+#[derive(Debug, Clone)]
+enum NumberType {
+    Literal(i64),
+    Number(Box<NumberPair>),
+}
+
+#[derive(Debug, Clone)]
+struct NumberPair {
+    left: NumberType,
+    right: NumberType,
+}
+
+#[derive(Debug, Clone)]
+enum ExplodeState {
+    None,
+    Completed,
+    AddValues(Option<i64>, Option<i64>),
+}
+
+impl NumberPair {
+    pub fn from_string(str: &String) -> Option<Box<NumberPair>> {
+        let mut types: VecDeque<NumberType> = VecDeque::new();
+
+        for ch in str.chars() {
+            match ch {
+                '0'..='9' => {
+                    let literal = ch.to_digit(10)? as i64;
+                    types.push_back(NumberType::Literal(literal));
+                }
+                '[' => {
+                    continue;
+                }
+                ',' => {
+                    continue;
+                }
+                ']' => {
+                    let first = types.pop_back()?;
+                    let second = types.pop_back()?;
+
+                    let number = NumberType::Number(Box::new(NumberPair {
+                        left: second,
+                        right: first,
+                    }));
+                    types.push_back(number);
+                }
+                _ => {
+                    eprintln!("Invalid token '{}'", ch);
+                    return None;
+                }
+            }
+        }
+
+        assert_eq!(types.len(), 1);
+        let front = types.pop_front().unwrap();
+
+        return match front {
+            NumberType::Number(bx) => Some(bx),
+            _ => None
+        };
+    }
+
+    pub fn add(lhs: &Box<NumberPair>, rhs: &Box<NumberPair>) -> Box<NumberPair> {
+        let mut number = Box::new(NumberPair {
+            left: NumberType::Number(lhs.clone()),
+            right: NumberType::Number(rhs.clone()),
+        });
+
+        number
+    }
+
+    fn find_explodable_pair(&mut self, depth: usize, count: &mut usize) -> Option<(usize, (i64, i64))> {
+        match (&mut self.left, &mut self.right) {
+            (NumberType::Number(branch), _) |
+            (_, NumberType::Number(branch)) => {
+                //  Target pair
+                if depth + 1 >= 4 {
+                    dbg!(&branch);
+                    println!("Explodable is at node {},{}", count, *count + 1);
+                    let values = match (&branch.left, &branch.right) {
+                        (NumberType::Literal(left), NumberType::Literal(right)) => (left.clone(), right.clone()),
+                        _ => panic!()
+                    };
+
+                    return Some((count.clone(), values));
+                }
+
+                println!("Depth {}: {:?}", depth, branch);
+                let v = branch.find_explodable_pair(depth + 1, count.borrow_mut());
+                if v.is_some() {
+                    return v;
+                }
+            }
+            _ => {}
+        }
+
+        match (&mut self.left, &mut self.right) {
+            (NumberType::Literal(literal), _) |
+            (_, NumberType::Literal(literal)) => {
+                *count += 1;
+            }
+            _ => {}
+        }
+
+        None
+    }
+
+    fn add_to_literal(&mut self, depth: usize, count: &mut usize, target: usize, value: i64) {
+        match (&mut self.left, &mut self.right) {
+            (NumberType::Number(branch), _) |
+            (_, NumberType::Number(branch)) => {
+                branch.add_to_literal(depth + 1, count.borrow_mut(), target, value);
+            }
+            _ => {}
+        }
+
+        match (&mut self.left, &mut self.right) {
+            (NumberType::Literal(literal), _) |
+            (_, NumberType::Literal(literal)) => {
+                *count += 1;
+                if *count == target {
+                    *literal += value;
+                }
+            }
+            _ => {}
+        }
+    }
+
+    fn explode_pair(&mut self, depth: usize) {
+        match &mut self.left {
+            NumberType::Number(branch) => {
+                if depth + 1 >= 4 {
+                    self.left = NumberType::Literal(0);
+                    return;
+                }
+
+                branch.explode_pair(depth + 1);
+            }
+            _ => {}
+        }
+        match &mut self.right {
+            NumberType::Number(branch) => {
+                if depth + 1 >= 4 {
+                    self.right = NumberType::Literal(0);
+                    return;
+                }
+
+                branch.explode_pair(depth + 1);
+            }
+            _ => {}
+        }
+    }
+
+    fn explode(&mut self) -> bool {
+        let mut tmp = 0;
+        let explodable = self.find_explodable_pair(0, &mut tmp);
+        if explodable.is_none() {
+            return false;
+        }
+
+        let explodable = explodable.unwrap();
+        let target = explodable.0;
+        let left = explodable.1.0;
+        let right = explodable.1.1;
+
+        if target > 0 {
+            println!("Adding {}", left);
+            self.add_to_literal(0, &mut tmp, target - 1, left);
+        }
+        println!("Adding {}", right);
+        self.add_to_literal(0, &mut tmp, target + 2, right);
+        self.explode_pair(0);
+        return true;
+    }
+}
+
+
+fn load(filename: &str) -> Vec<String> {
+    let file = File::open(filename).expect("no such file");
+    let buf = BufReader::new(file);
+
+    buf.lines()
+        .map(
+            |l| l.unwrap()
+        )
+        .collect()
+}
+
+fn main() {
+    let input = load("sample.txt");
+
+    let mut numbers: Vec<Box<NumberPair>> = vec![];
+    for line in input {
+        let number = NumberPair::from_string(line.borrow());
+        // dbg!(number.borrow());
+        if number.is_some() {
+            numbers.push(number.unwrap());
+        }
+    }
+
+    dbg!(&numbers[0]);
+    numbers[0].explode();
+    dbg!(&numbers[0]);
+}

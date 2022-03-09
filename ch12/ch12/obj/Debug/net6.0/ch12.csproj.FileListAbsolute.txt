@@ -1,0 +1,15 @@
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/bin/Debug/net6.0/ch12
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/bin/Debug/net6.0/ch12.deps.json
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/bin/Debug/net6.0/ch12.runtimeconfig.json
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/bin/Debug/net6.0/ch12.dll
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/bin/Debug/net6.0/ref/ch12.dll
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/bin/Debug/net6.0/ch12.pdb
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/obj/Debug/net6.0/ch12.csproj.AssemblyReference.cache
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/obj/Debug/net6.0/ch12.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/obj/Debug/net6.0/ch12.AssemblyInfoInputs.cache
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/obj/Debug/net6.0/ch12.AssemblyInfo.cs
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/obj/Debug/net6.0/ch12.csproj.CoreCompileInputs.cache
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/obj/Debug/net6.0/ch12.dll
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/obj/Debug/net6.0/ref/ch12.dll
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/obj/Debug/net6.0/ch12.pdb
+/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/obj/Debug/net6.0/ch12.genruntimeconfig.cache

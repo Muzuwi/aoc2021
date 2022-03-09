@@ -1,0 +1,2 @@
+Version sum: 984
+Root packet value: 1015320896946

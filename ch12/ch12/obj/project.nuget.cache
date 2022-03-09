@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "3kVULbVGsO0VAWIKPlhvS7Php2sJnd7pkpigRLN8Vi1xNpa9u8rTQfhug4RjPQ3hygwZ2a4BNn3yvevuiD9VgQ==",
+  "success": true,
+  "projectFilePath": "/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/ch12.csproj",
+  "expectedPackageFiles": [
+    "/home/muzuwi/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.0/microsoft.aspnetcore.app.ref.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

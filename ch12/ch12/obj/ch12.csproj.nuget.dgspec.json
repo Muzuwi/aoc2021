@@ -1,0 +1,60 @@
+{
+  "format": 1,
+  "restore": {
+    "/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/ch12.csproj": {}
+  },
+  "projects": {
+    "/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/ch12.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/ch12.csproj",
+        "projectName": "ch12",
+        "projectPath": "/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/ch12.csproj",
+        "packagesPath": "/home/muzuwi/.nuget/packages/",
+        "outputPath": "/mnt/prog/Programming/Challenges/aoc21/ch12/ch12/obj/",
+        "projectStyle": "PackageReference",
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.0, 6.0.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.100/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
